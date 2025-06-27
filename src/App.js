@@ -33,20 +33,22 @@ function Accordion({ data }) {
         <AccordionItem
           title={item.title}
           num={idx + 1}
-          text={item.text}
           curOpen={curOpen}
           onCurOpen={setCurOpen}
-        />
+          key={item.title}
+        >
+          {item.text}
+        </AccordionItem>
       ))}
     </div>
   );
 }
 
-function AccordionItem({ num, title, text, curOpen, onCurOpen }) {
+function AccordionItem({ num, title, children, curOpen, onCurOpen }) {
   const isOpen = num === curOpen;
 
   const handleToggleOpen = () => {
-    onCurOpen(num);
+    onCurOpen(isOpen ? null : num);
   };
 
   return (
@@ -55,7 +57,7 @@ function AccordionItem({ num, title, text, curOpen, onCurOpen }) {
       <p className="title">{title}</p>
       <p className="icon">{isOpen ? "-" : "+"}</p>
 
-      {isOpen && <div className="content-box">{text}</div>}
+      {isOpen && <div className="content-box">{children}</div>}
     </div>
   );
 }
